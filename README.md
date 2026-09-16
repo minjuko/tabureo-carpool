@@ -132,6 +132,25 @@ tabureo-carpool/
 
 ---
 
+## 프로젝트 이후 개선 및 검증
+
+기존 사용자 흐름을 유지하면서 권한 검증과 외부 경로 요청의 예외 처리를 보완했습니다.
+
+- 카풀 수정·삭제를 작성자만 가능하도록 제한
+- 댓글 작성자를 서버의 `current_user`로 지정하고, 댓글 삭제를 댓글 작성자 또는 카풀 작성자로 제한
+- TMAP 경로 요청을 비동기로 전환하고 시간 초과·빈 응답·실패 안내 추가
+- 잘못된 날짜 검색을 빈 결과로 처리
+
+| 검증 | 결과 |
+| --- | --- |
+| Rails 테스트 | 21 runs · 55 assertions · 0 failures / 0 errors / 0 skips |
+| Frontend 자산 | Webpack production pack 9개 · 약 413KB |
+| GitHub Actions | Ruby 2.7 · Node 16 · Rails 테스트 · production asset precompile |
+
+TMAP API의 실제 호출은 검증 범위에 포함하지 않았습니다.
+
+---
+
 ## 개발 환경
 
 본 Repository는 **2021년 해커톤 당시 개발 환경과 구현 결과를 기준으로 보존한 프로젝트**입니다.
