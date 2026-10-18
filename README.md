@@ -1,5 +1,7 @@
 # 타부러
 
+[![Rails CI](https://github.com/minjuko/tabureo-carpool/actions/workflows/ci.yml/badge.svg)](https://github.com/minjuko/tabureo-carpool/actions/workflows/ci.yml)
+
 > **호남지역의 이동 불편을 개선하기 위해 기획한 모바일 웹 기반 카풀 서비스**
 
 제2회 OASIS 해커톤에서 4명이 함께 만든 프로젝트입니다.
@@ -129,6 +131,8 @@ tabureo-carpool/
 ├── Gemfile
 └── README.md
 ```
+
+`FE/`는 Rails 통합 전 초기 정적 화면이고 `app/`은 Rails 화면입니다. 두 화면 구현이 각각 참조하는 이미지가 있어 동일한 파일도 각 경로에 보존했습니다.
 
 ---
 
