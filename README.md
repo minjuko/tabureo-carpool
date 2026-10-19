@@ -8,9 +8,7 @@
 
 출발지와 목적지가 비슷한 사용자가 함께 이동할 수 있도록 카풀 탐색·등록·상세 조회·참여 기능을 구현하고, **TMAP 경로 API**를 활용해 출발지와 도착지 사이의 이동 경로를 지도에 시각화했습니다.
 
----
-
-## 프로젝트 정보
+## 프로젝트 개요
 
 | 항목 | 내용 |
 | --- | --- |
@@ -20,9 +18,12 @@
 | 담당 역할 | Frontend |
 | 서비스 형태 | 모바일 웹 |
 
----
+## 주요 기능 및 화면
 
-## 주요 기능
+| **카풀 목록** | **카풀 등록** | **카풀 상세 · 경로 조회** |
+| :---: | :---: | :---: |
+| <img width="200" alt="카풀 목록 화면" src="docs/images/carpool-list.PNG"> | <img width="200" alt="카풀 등록 화면" src="docs/images/carpool-new.PNG"> | <img width="200" alt="카풀 상세 및 TMAP 경로 조회 화면" src="docs/images/carpool-tmap-detail.PNG"> |
+| 등록된 카풀 목록 조회 및 출발지·도착지·날짜 조건을 통한 카풀 탐색 | 출발지·목적지·출발 시간 등 카풀 모집에 필요한 정보 등록 | 카풀 모집 정보 확인 및 TMAP을 활용한 출발지·도착지 이동 경로 조회 |
 
 - 카풀 목록 조회 및 조건 검색
 - 카풀 등록 및 상세 조회
@@ -30,9 +31,17 @@
 - 로그인·회원가입·프로필 관리
 - TMAP 기반 출발지·도착지 및 이동 경로 확인
 
----
+## 기술 스택
 
-## 개인 기여
+| 구분 | 기술 |
+| --- | --- |
+| Frontend | HTML5, CSS3, JavaScript, jQuery |
+| Backend / Template | Ruby on Rails 6.1, ERB, Devise |
+| Database | SQLite |
+| External API | TMAP JavaScript API, TMAP 경로 탐색 API |
+| Collaboration | Slack, Git, GitHub |
+
+## 담당 역할 및 핵심 구현
 
 - HTML/CSS 기반 모바일 웹 UI 구현
 - 사용자 **프로필 화면 UI 및 CSS 직접 구현**
@@ -40,10 +49,6 @@
 - TMAP 경로 API 연동 및 지도 시각화 공동 작업
 - Rails ERB View와 Frontend 화면 통합 참여
 - Slack 및 Git/GitHub 기반 4인 팀 협업
-
----
-
-## 핵심 구현
 
 ### 1. 모바일 카풀 서비스 UI
 
@@ -81,62 +86,26 @@ HTML/CSS/JavaScript로 제작한 정적 화면을 Rails의 **ERB View에 적용*
 
 Rails Route 및 Form과 화면을 연결하면서 Frontend와 Backend가 하나의 사용자 흐름으로 동작하도록 통합했습니다.
 
----
+## 트러블슈팅
 
-## 화면
+### TMAP 경로 요청 실패에 대한 화면 처리
 
-| **카풀 목록** | **카풀 등록** | **카풀 상세 · 경로 조회** |
-| :---: | :---: | :---: |
-| <img width="200" alt="카풀 목록 화면" src="docs/images/carpool-list.PNG"> | <img width="200" alt="카풀 등록 화면" src="docs/images/carpool-new.PNG"> | <img width="200" alt="카풀 상세 및 TMAP 경로 조회 화면" src="docs/images/carpool-tmap-detail.PNG"> |
-| 등록된 카풀 목록 조회 및 출발지·도착지·날짜 조건을 통한 카풀 탐색 | 출발지·목적지·출발 시간 등 카풀 모집에 필요한 정보 등록 | 카풀 모집 정보 확인 및 TMAP을 활용한 출발지·도착지 이동 경로 조회 |
+- **문제:** 외부 경로 요청이 지연되거나 빈 응답을 반환할 때 경로를 표시할 수 없었습니다.
+- **해결:** 경로 요청을 비동기로 처리하고 시간 초과·빈 응답·실패 상황을 안내하도록 보완했습니다.
+- **검증:** Rails 테스트 21건·55 assertions 및 CI를 확인했습니다. 실제 TMAP 호출 검증은 포함하지 않았습니다.
 
----
+## 시작하기 (Getting Started)
 
-## 기술 스택
+Ruby 2.7 · Rails 6.1 · SQLite 기반의 해커톤 프로젝트입니다. 의존성 설치 후 Rails 서버를 실행합니다.
 
-| 구분 | 기술 |
-| --- | --- |
-| Frontend | HTML5, CSS3, JavaScript, jQuery |
-| Backend / Template | Ruby on Rails 6.1, ERB, Devise |
-| Database | SQLite |
-| External API | TMAP JavaScript API, TMAP 경로 탐색 API |
-| Collaboration | Slack, Git, GitHub |
-
----
-
-## 저장소 구조
-
-```text
-tabureo-carpool/
-├── FE/                     # 초기 정적 Frontend
-│   ├── css/
-│   ├── js/
-│   └── *.html
-│
-├── app/
-│   ├── controllers/        # Rails Controller
-│   ├── models/             # Rails Model
-│   └── views/              # ERB View
-│       ├── rides/
-│       ├── history/
-│       ├── users/
-│       ├── devise/
-│       └── chats/
-│
-├── config/                 # Rails 및 Route 설정
-├── db/                     # Database 설정
-├── docs/
-│   └── images/             # README 화면 자료
-│
-├── Gemfile
-└── README.md
+```bash
+bundle install
+bundle exec rails db:migrate
+bundle exec rails server
 ```
 
-`FE/`는 Rails 통합 전 초기 정적 화면이고 `app/`은 Rails 화면입니다. 두 화면 구현이 각각 참조하는 이미지가 있어 동일한 파일도 각 경로에 보존했습니다.
 
----
-
-## 개선 작업 및 검증 결과
+## 테스트 및 코드 품질
 
 기존 사용자 흐름을 유지하면서 권한 검증과 외부 경로 요청의 예외 처리를 보완했습니다.
 
@@ -153,28 +122,6 @@ tabureo-carpool/
 
 TMAP API의 실제 호출은 검증 범위에 포함하지 않았습니다.
 
----
+## 산출물 및 관련 문서
 
-## 개발 환경
-
-본 Repository는 **2021년 해커톤 당시 개발 환경과 구현 결과를 기준으로 보존한 프로젝트**입니다.
-
-| 구분 | 환경 |
-| --- | --- |
-| Ruby | 2.7 |
-| Ruby on Rails | 6.1 |
-| Database | SQLite |
-| Frontend | HTML5, CSS3, JavaScript, jQuery |
-| External API | TMAP JavaScript API, TMAP 경로 탐색 API |
-
-현재 서비스 배포 및 실행 환경을 별도로 운영하고 있지 않습니다.
-
----
-
-## 구현 범위
-
-- 핵심 카풀 탐색·등록·상세 및 참여 흐름은 Rails와 연결되어 있습니다.
-- 로그인·회원가입·프로필 등의 사용자 기능은 Devise/Rails와 연결되어 있습니다.
-- 일부 채팅 및 부가 기능은 UI 프로토타입 단계입니다.
-- TMAP 상세 화면은 시연용 고정 좌표를 기반으로 경로를 조회합니다.
-- Repository는 당시 프로젝트 구조와 구현 결과를 유지하며 공개에 필요한 설정만 정리했습니다.
+- [원본 프로젝트](https://github.com/minjuuko/2021Hackathon)
